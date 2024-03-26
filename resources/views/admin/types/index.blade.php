@@ -58,11 +58,18 @@
 
                     {{-- Progetti assegnati --}}
                     <td>
-                        @forelse ($type->projects as $project)
-                            <p class="mb-0">{{ $project->title }}</p>
-                        @empty
-                            <p class="mb-0 text-secondary ">Nessun progetto</p>
-                        @endforelse
+                        <ul>
+
+                            @forelse ($type->projects as $project)
+                                <li class="mb-0">
+                                    <a href="{{ route('admin.projects.show', $project->id) }}">
+                                        {{ $project->title }}
+                                    </a>
+                                </li>
+                            @empty
+                                <li class="mb-0 text-secondary ">Nessun progetto</li>
+                            @endforelse
+                        </ul>
                     </td>
 
                     {{-- Data creazione --}}

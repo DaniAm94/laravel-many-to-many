@@ -57,7 +57,7 @@
 
                     {{-- Tipologia --}}
                     <td><span class="badge text-black "
-                            @if ($project->type) style="background-color: {{ $project->type->color }}" @endif>{{ $project->type ? $project->type->label : '-' }}</span>
+                            @if ($project->type) style="background-color: {{ $project->type->color }}" @endif>{{ $project->type ? $project->type->label : 'Nessuna' }}</span>
                     </td>
 
                     {{-- Stato --}}
