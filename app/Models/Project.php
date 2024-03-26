@@ -19,7 +19,12 @@ class Project extends Model
     }
     public function getAbstract($length)
     {
-        return substr($this->description, 0, $length) . '...';
+        $abstract = substr($this->description, 0, $length);
+        if (strlen($this->description) > 100) {
+            $abstract = $abstract . '...';
+        }
+
+        return  $abstract;
     }
     public function printImage()
     {
