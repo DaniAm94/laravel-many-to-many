@@ -111,7 +111,7 @@ class ProjectController extends Controller
         } elseif (!Arr::exists($data, 'technologies') && $project->has('technologies')) {
             $project->technologies()->detach();
         }
-        return to_route('admin.projects.show', $project->id);
+        return to_route('admin.projects.show', $project->id)->with('message', 'Progetto modificato con successo')->with('type', 'warning');
     }
 
     /**
