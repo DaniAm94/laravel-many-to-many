@@ -104,8 +104,13 @@ class ProjectController extends Controller
 
             $project->image = $img_url;
         }
-        $project->fill($data);
-        $project->save();
+        $project->update($data);
+
+        if (Arr::exists($data, 'technologies')) {
+            $project->technologies()->sync($data['technologies']);
+        } elseif (!Arr::exists($data, 'technologies') && $project->has('technologies')) {
+            $project->technologies()->detach();
+        }
         return to_route('admin.projects.show', $project->id);
     }
 
