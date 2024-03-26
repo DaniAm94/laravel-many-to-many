@@ -97,16 +97,24 @@
 
 {{-- Tecnologie --}}
 <div class="col-10">
-    @forelse ($technologies as $technology)
-        <div class=" form-check form-check-inline ">
-            <input class="form-check-input" name="technologies[]" type="checkbox" value="{{ $technology->id }}"
-                id="technology-{{ $technology->id }}" @if (in_array($technology->id, old('technologies', $prev_technologies ?? []))) checked @endif>
-            <label class="form-check-label" for="technology-{{ $technology->id }}">
-                {{ $technology->label }}
-            </label>
+    <div class="form-group @error('technologies') is-invalid @enderror">
+        <p>Seleziona le tecnologie usate in questo progetto</p>
+        @forelse ($technologies as $technology)
+            <div class=" form-check form-check-inline ">
+                <input class="form-check-input" name="technologies[]" type="checkbox" value="{{ $technology->id }}"
+                    id="technology-{{ $technology->id }}" @if (in_array($technology->id, old('technologies', $prev_technologies ?? []))) checked @endif>
+                <label class="form-check-label" for="technology-{{ $technology->id }}">
+                    {{ $technology->label }}
+                </label>
+            </div>
+        @empty
+        @endforelse
+    </div>
+    @error('technologies')
+        <div class="invalid-feedback">
+            {{ $message }}
         </div>
-    @empty
-    @endforelse
+    @enderror
 </div>
 
 {{-- Stato progetto --}}
