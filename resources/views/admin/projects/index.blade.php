@@ -27,6 +27,7 @@
                 <th scope="col">Titolo</th>
                 <th scope="col">Slug</th>
                 <th scope="col">Tipologia</th>
+                <th scope="col">Tecnologie</th>
                 <th scope="col">Completato</th>
                 <th scope="col">Data creazione</th>
                 <th scope="col">Ultima modifica</th>
@@ -58,6 +59,15 @@
                     {{-- Tipologia --}}
                     <td><span class="badge text-black "
                             @if ($project->type) style="background-color: {{ $project->type->color }}" @endif>{{ $project->type ? $project->type->label : 'Nessuna' }}</span>
+                    </td>
+
+                    {{-- Tecnologie --}}
+                    <td>
+                        @forelse ($project->technologies as $technology)
+                            <span
+                                class="badge rounded-pill text-bg-{{ $technology->color }}">{{ $technology->label }}</span>
+                        @empty
+                        @endforelse
                     </td>
 
                     {{-- Stato --}}
@@ -105,7 +115,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="8">
+                    <td colspan="9">
                         <h3>Non ci sono progetti al momento</h3>
                     </td>
                 </tr>
