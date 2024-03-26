@@ -8,7 +8,7 @@
         <h1 class="my-3 ">{{ $project->title }}</h1>
         {{-- Tipologia --}}
         <p>Tipologia: @if ($project->type)
-                <span class="badge ms-2"
+                <span class="badge ms-2 text-black"
                     style="background-color: {{ $project->type->color }}">{{ $project->type->label }}</span>
             @else
                 Nessuna
@@ -17,17 +17,33 @@
     </header>
     <hr>
     <div class="clearfix">
+        {{-- Immagine --}}
         @if ($project->image)
             <img style="width: 250px" src="{{ $project->printImage() }}" alt="{{ $project->title }}"
                 class="me-3 float-start img-fluid ">
         @endif
+
+        {{-- Descrizione --}}
         <p>{{ $project->description }}</p>
-        <div>
-            <strong>Data creazione: </strong> {{ $project->getFormattedDate($project->created_at) }}
-            <strong class="ms-3">Ultima modifica: </strong> {{ $project->getFormattedDate($project->updated_at) }}
+
+        <div class="d-flex justify-content-between ">
+            {{-- Creazione e modifica --}}
+            <div class="dates-info">
+                <strong>Data creazione: </strong> {{ $project->getFormattedDate($project->created_at) }}
+                <strong class="ms-3">Ultima modifica: </strong> {{ $project->getFormattedDate($project->updated_at) }}
+            </div>
+
+            {{-- Tecnologie --}}
+            <div class="technologies">
+                @forelse ($project->technologies as $technology)
+                    <span class="badge rounded-pill text-bg-{{ $technology->color }}">{{ $technology->label }}</span>
+                @empty
+                @endforelse
+            </div>
         </div>
     </div>
     <hr>
+    {{-- Barra pulsanti --}}
     <footer class="d-flex justify-content-between align--items-center">
         <a href="{{ route('admin.projects.index') }}" class="btn btn-sm btn-secondary">
             <i class="fa-solid fa-rotate-left"></i>
