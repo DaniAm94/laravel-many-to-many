@@ -60,7 +60,10 @@ class ProjectController extends Controller
             $project->image = $img_url;
         }
         $project->save();
-        return to_route('admin.projects.show', $project->id);
+        if (Arr::exists($data, 'technologies')) {
+            $project->technologies()->attach($data['technologies']);
+        }
+        return to_route('admin.projects.show', $project->id)->with('message', 'Progetto creato con successo')->with('type', 'success');
     }
 
     /**
