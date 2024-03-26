@@ -95,8 +95,22 @@
     </figure>
 </div>
 
+{{-- Tecnologie --}}
+<div class="col-10">
+    @forelse ($technologies as $technology)
+        <div class=" form-check form-check-inline ">
+            <input class="form-check-input" name="technologies[]" type="checkbox" value="{{ $technology->id }}"
+                id="technology-{{ $technology->id }}" @if (in_array($technology->id, old('technologies', $prev_technologies ?? []))) checked @endif>
+            <label class="form-check-label" for="technology-{{ $technology->id }}">
+                {{ $technology->label }}
+            </label>
+        </div>
+    @empty
+    @endforelse
+</div>
+
 {{-- Stato progetto --}}
-<div class="col-12 form-check d-flex justify-content-end gap-3">
+<div class="col-2 form-check form-switch d-flex justify-content-end gap-3">
     <input class="form-check-input" name="is_completed" type="checkbox" value="1" id="is_completed"
         @if (old('is_completed', $project->is_completed)) checked @endif>
     <label class="form-check-label" for="is_completed">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -38,8 +39,9 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::select('id', 'label')->get();
+        $technologies = Technology::select('id', 'label')->get();
         $project = new Project();
-        return view('admin.projects.create', compact('project', 'types'));
+        return view('admin.projects.create', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -75,7 +77,9 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::select('id', 'label')->get();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $technologies = Technology::select('id', 'label')->get();
+        $prev_technologies = $project->technologies->pluck('id')->toArray();
+        return view('admin.projects.edit', compact('project', 'types', 'technologies', 'prev_technologies'));
     }
 
     /**
