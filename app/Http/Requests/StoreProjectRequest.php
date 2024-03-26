@@ -24,6 +24,7 @@ class StoreProjectRequest extends FormRequest
         return [
             'title' => 'required|string|unique:projects|min:10|max:40',
             'type_id' => 'nullable|exists:types,id',
+            'technologies' => 'nullable|exists:technology,id',
             'description' => 'required|string',
             'image' => 'nullable|image|mimes:png,jpg,jpeg',
             'is_completed' => 'nullable|boolean'
@@ -37,6 +38,7 @@ class StoreProjectRequest extends FormRequest
             'title.min' => 'Il titolo deve essere almeno di :min caratteri',
             'title.max' => 'Il titolo non può superare i :max caratteri',
             'type_id.exists' => 'La tipologia selezionata non è valida',
+            'technologies.exists' => 'La tecnologie scelte non sono valide',
             'description.required' => 'E\' necessario inserire una descrizione',
             'image.image' => 'Il file deve essere un immagine',
             'image.mimes' => 'Il file immagine può avere estensioni jpg, jpeg, png',
