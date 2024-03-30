@@ -11,6 +11,7 @@ use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -81,6 +82,13 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+
+        // if ($project->user_id !== Auth::id()) {
+        //     return to_route('admin.projects.index')->with('type', 'warning')->with('message', 'Non sei autorizzato a modificare questo progetto');
+        // }
+        // Autorizzazione tramiite ProjectPolicy + Gate
+        Gate::authorize('update-project', $project);
+
         $types = Type::select('id', 'label')->get();
         $technologies = Technology::select('id', 'label')->get();
         $prev_technologies = $project->technologies->pluck('id')->toArray();
@@ -92,6 +100,14 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
+
+        // Autorizzazione tramite ProjectPolicy
+        // $this->authorize('update', $project);
+
+        // Autorizzazione tramiite ProjectPolicy + Gate
+        Gate::authorize('update-project', $project);
+
+
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
         $data['is_completed'] = Arr::exists($data, 'is_completed');
@@ -121,6 +137,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        // Autorizzazione tramite gate + project policy
+        Gate::authorize('destroy-project', $project);
         $project->delete();
         return to_route('admin.projects.index')
             ->with('toast-button-type', 'danger')
@@ -139,11 +157,13 @@ class ProjectController extends Controller
     }
     public function restore(Project $project)
     {
+        Gate::authorize('restore-project', $project);
         $project->restore();
         return to_route('admin.projects.index')->with('type', 'success')->with('message', 'Progetto ripristinato');
     }
     public function drop(Project $project)
     {
+        Gate::authorize('drop-project', $project);
         if ($project->has('technologies')) $project->technologies()->detach();
         if ($project->image) Storage::delete($project->image);
         $project->forceDelete();
