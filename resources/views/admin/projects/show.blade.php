@@ -12,7 +12,7 @@
 
         {{-- Tipologia --}}
         <p>Tipologia: @if ($project->type)
-                <span class="badge ms-2 text-black"
+                <span class="badge ms-2"
                     style="background-color: {{ $project->type->color }}">{{ $project->type->label }}</span>
             @else
                 Nessuna
@@ -30,7 +30,7 @@
         {{-- Descrizione --}}
         <p>{{ $project->description }}</p>
 
-        <div class="d-flex justify-content-between ">
+        <div class="d-flex flex-column row-gap-3  ">
             {{-- Creazione e modifica --}}
             <div class="dates-info">
                 <strong>Data creazione: </strong> {{ $project->getFormattedDate($project->created_at) }}
@@ -49,16 +49,25 @@
     <hr>
     {{-- Barra pulsanti --}}
     <footer class="d-flex justify-content-between align--items-center">
+
+        {{-- Indietro --}}
         <a href="{{ route('admin.projects.index') }}" class="btn btn-sm btn-secondary">
             <i class="fa-solid fa-rotate-left"></i>
             Torna indietro
         </a>
-        @if ($project->user_id === Auth::id())
-            <div class="d-flex justify-content-between gap-3">
+
+        <div class="d-flex justify-content-between gap-3">
+
+            {{-- Modifica --}}
+            @can('update', $project)
                 <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-sm btn-warning">
                     <i class="fas fa-pencil"></i>
                     Modifica
                 </a>
+            @endcan
+
+            {{-- Elimina --}}
+            @can('delete', $project)
                 <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" class="delete-form"
                     data-bs-toggle="modal" data-bs-target="#delete-modal">
                     @csrf
@@ -67,8 +76,8 @@
                         <i class="far fa-trash-can"></i>
                         Elimina</button>
                 </form>
-            </div>
-        @endif
+            @endcan
+        </div>
 
     </footer>
     {{-- Delete Modal --}}

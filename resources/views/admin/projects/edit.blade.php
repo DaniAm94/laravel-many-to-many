@@ -2,7 +2,7 @@
 @section('title', 'Edit')
 @section('content')
     <header>
-        <h1 class="text-center">Inserisci un nuovo progetto</h1>
+        <h1 class="text-center">Modifica progetto</h1>
     </header>
     <hr>
 

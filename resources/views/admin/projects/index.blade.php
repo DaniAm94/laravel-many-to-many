@@ -104,11 +104,12 @@
                                 <a href="{{ route('admin.projects.show', $project->id) }}" class="btn btn-sm btn-primary">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                @if ($project->user_id === Auth::id())
-                                    <a href="{{ route('admin.projects.edit', $project->id) }}"
-                                        class="btn btn-sm btn-warning">
+                                @can('update', $project)
+                                    <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-sm btn-warning">
                                         <i class="fas fa-pencil"></i>
                                     </a>
+                                @endcan
+                                @can('delete', $project)
                                     <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST"
                                         class="delete-form" data-title="{{ $project->title }}" data-bs-toggle="modal"
                                         data-bs-target="#delete-modal">
@@ -118,7 +119,7 @@
                                             <i class="far fa-trash-can"></i>
                                         </button>
                                     </form>
-                                @endif
+                                @endcan
                             </div>
                         </td>
                     </tr>
