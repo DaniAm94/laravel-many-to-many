@@ -18,13 +18,17 @@
 
                 <div class="card my-5">
                     <div class="card-header d-flex justify-content-between align-items-center ">
-                        {{-- Type --}}
-                        @if ($project->type)
-                            <span class="badge"
-                                style="background-color: {{ $project->type->color }};">{{ $project->type->label }}</span>
-                        @else
-                            <span class="badge text-bg-secondary ">Nessuna categoria</span>
-                        @endif
+
+                        <div>
+
+                            {{-- Autore --}}
+                            <span>{{ $project->user ? $project->user->name : 'Anonimo' }}</span>
+
+                            {{-- Data creazione --}}
+                            <small class="card-subtitle text-body-secondary">
+                                {{ $project->getFormattedDate('created_at') }}
+                            </small>
+                        </div>
 
                         {{-- Pulsante vedi dettaglio --}}
                         <a href="{{ route('guest.projects.show', $project->slug) }}" class="btn btn-sm btn-primary ">Vedi</a>
@@ -43,10 +47,15 @@
                                 {{-- Titolo --}}
                                 <h5 class="card-title mb-2 text-break">{{ $project->title }}</h5>
 
-                                {{-- Data creazione --}}
-                                <small class="card-subtitle text-body-secondary">
-                                    {{ $project->getFormattedDate('created_at') }}
-                                </small>
+                                {{-- Type --}}
+                                @if ($project->type)
+                                    <span class="badge"
+                                        style="background-color: {{ $project->type->color }};">{{ $project->type->label }}</span>
+                                @else
+                                    <span class="badge text-bg-secondary ">Nessuna categoria</span>
+                                @endif
+
+
 
                                 {{-- Descrizione --}}
                                 <p class="card-text mt-2">{{ $project->getAbstract(70) }}</p>

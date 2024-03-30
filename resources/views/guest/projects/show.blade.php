@@ -5,12 +5,9 @@
 @section('content')
     <div class="card my-5">
         <div class="card-header d-flex justify-content-between align-items-center ">
-            {{-- Type --}}
-            @if ($project->type)
-                <span class="badge" style="background-color: {{ $project->type->color }};">{{ $project->type->label }}</span>
-            @else
-                <span class="badge text-bg-secondary ">Nessuna categoria</span>
-            @endif
+
+            {{-- Autore --}}
+            <div>{{ $project->user ? $project->user->name : 'Anonimo' }}</div>
 
             {{-- Pulsante per tornare alla lista --}}
             <a href="{{ route('guest.home') }}" class="btn btn-sm btn-primary ">Torna alla lista</a>
@@ -29,11 +26,25 @@
                     {{-- Titolo --}}
                     <h5 class="card-title ">{{ $project->title }}</h5>
 
+                    {{-- Type --}}
+                    <div class="mb-2">Tipologia progetto:
+                        @if ($project->type)
+                            <span class="badge"
+                                style="background-color: {{ $project->type->color }};">{{ $project->type->label }}</span>
+                        @else
+                            <span class="badge text-bg-secondary ">Nessuna</span>
+                        @endif
+                    </div>
+
                     {{-- Tecnologie --}}
-                    @forelse ($project->technologies as $technology)
-                        <span class="badge rounded-pill text-bg-{{ $technology->color }}">{{ $technology->label }}</span>
-                    @empty
-                    @endforelse
+                    <div>Tecnologie utilizzate:
+
+                        @forelse ($project->technologies as $technology)
+                            <span
+                                class="badge rounded-pill text-bg-{{ $technology->color }}">{{ $technology->label }}</span>
+                        @empty
+                        @endforelse
+                    </div>
 
                     {{-- Data creazione --}}
                     <h6 class="card-subtitle my-2 text-body-secondary">{{ $project->getFormattedDate('created_at') }}</h6>
