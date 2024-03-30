@@ -6,6 +6,10 @@
     <header>
         {{-- Titolo --}}
         <h1 class="my-3 ">{{ $project->title }}</h1>
+
+        {{-- Autore --}}
+        <h5>{{ $project->user ? $project->user->name : 'Anonimo' }}</h5>
+
         {{-- Tipologia --}}
         <p>Tipologia: @if ($project->type)
                 <span class="badge ms-2 text-black"
