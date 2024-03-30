@@ -104,18 +104,21 @@
                                 <a href="{{ route('admin.projects.show', $project->id) }}" class="btn btn-sm btn-primary">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-sm btn-warning">
-                                    <i class="fas fa-pencil"></i>
-                                </a>
-                                <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST"
-                                    class="delete-form" data-title="{{ $project->title }}" data-bs-toggle="modal"
-                                    data-bs-target="#delete-modal">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">
-                                        <i class="far fa-trash-can"></i>
-                                    </button>
-                                </form>
+                                @if ($project->user_id === Auth::id())
+                                    <a href="{{ route('admin.projects.edit', $project->id) }}"
+                                        class="btn btn-sm btn-warning">
+                                        <i class="fas fa-pencil"></i>
+                                    </a>
+                                    <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST"
+                                        class="delete-form" data-title="{{ $project->title }}" data-bs-toggle="modal"
+                                        data-bs-target="#delete-modal">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="far fa-trash-can"></i>
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         </td>
                     </tr>

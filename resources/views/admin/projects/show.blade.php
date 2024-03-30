@@ -53,20 +53,22 @@
             <i class="fa-solid fa-rotate-left"></i>
             Torna indietro
         </a>
-        <div class="d-flex justify-content-between gap-3">
-            <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-sm btn-warning">
-                <i class="fas fa-pencil"></i>
-                Modifica
-            </a>
-            <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" class="delete-form"
-                data-bs-toggle="modal" data-bs-target="#delete-modal">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-sm btn-danger">
-                    <i class="far fa-trash-can"></i>
-                    Elimina</button>
-            </form>
-        </div>
+        @if ($project->user_id === Auth::id())
+            <div class="d-flex justify-content-between gap-3">
+                <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-sm btn-warning">
+                    <i class="fas fa-pencil"></i>
+                    Modifica
+                </a>
+                <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" class="delete-form"
+                    data-bs-toggle="modal" data-bs-target="#delete-modal">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-danger">
+                        <i class="far fa-trash-can"></i>
+                        Elimina</button>
+                </form>
+            </div>
+        @endif
 
     </footer>
     {{-- Delete Modal --}}
