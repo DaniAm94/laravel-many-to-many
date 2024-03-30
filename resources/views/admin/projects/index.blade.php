@@ -27,6 +27,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Titolo</th>
+                    <th scope="col">Autore</th>
                     <th scope="col">Slug</th>
                     <th scope="col">Tipologia</th>
                     <th scope="col">Tecnologie</th>
@@ -37,7 +38,7 @@
                         <div class="d-flex justify-content-end gap-2">
                             <a href="{{ route('admin.projects.trash') }}" class="btn btn-sm btn-secondary">
                                 <i class="fas fa-trash me-2"></i>
-                                Vedi cestino</a>
+                                Cestino</a>
 
                             <a href="{{ route('admin.projects.create') }}" class="btn btn-sm btn-success ">
                                 <i class="fas fa-plus me-2"></i>Nuovo
@@ -54,6 +55,9 @@
 
                         {{-- Titolo --}}
                         <td>{{ $project->title }}</td>
+
+                        {{-- Autore --}}
+                        <td>{{ $project->user ? $project->user->name : 'Anonimo' }}</td>
 
                         {{-- Slug --}}
                         <td>{{ $project->slug }}</td>
@@ -117,7 +121,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="9">
+                        <td colspan="10">
                             <h3>Non ci sono progetti al momento</h3>
                         </td>
                     </tr>
