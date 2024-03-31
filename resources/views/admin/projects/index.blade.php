@@ -10,10 +10,27 @@
         {{-- Filtro --}}
         <form action="{{ route('admin.projects.index') }}" method="GET">
             <div class="input-group">
-                <select name="filter" class="form-select">
-                    <option value="">Tutti</option>
-                    <option @if ($filter === 'completed') selected @endif value="completed">Completati</option>
-                    <option @if ($filter === 'work in progress') selected @endif value="work in progress">In corso</option>
+                {{-- Filtro status --}}
+                <select name="status_filter" class="form-select">
+                    <option value="">Completati e non</option>
+                    <option @if ($status_filter === 'completed') selected @endif value="completed">Completati</option>
+                    <option @if ($status_filter === 'work in progress') selected @endif value="work in progress">In corso</option>
+                </select>
+                {{-- Filtro per tipo --}}
+                <select name="type_filter" class="form-select">
+                    <option value="">Tutti i tipi</option>
+                    @foreach ($types as $type)
+                        <option @if ($type_filter == $type->id) selected @endif value="{{ $type->id }}">
+                            {{ $type->label }}</option>
+                    @endforeach
+                </select>
+                {{-- Filtro per tipo --}}
+                <select name="technology_filter" class="form-select">
+                    <option value="">Tutte le tecnologie</option>
+                    @foreach ($technologies as $technology)
+                        <option @if ($technology_filter == $technology->id) selected @endif value="{{ $technology->id }}">
+                            {{ $technology->label }}</option>
+                    @endforeach
                 </select>
                 <button class="btn btn-outline-secondary" type="submit">Filtra</button>
             </div>
