@@ -13,7 +13,7 @@ class TypeController extends Controller
      */
     public function index()
     {
-        $types = Type::all();
+        $types = Type::withCount('projects')->get();
         return view('admin.types.index', compact('types'));
     }
 

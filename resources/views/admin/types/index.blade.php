@@ -59,6 +59,7 @@
 
                         {{-- Progetti assegnati --}}
                         <td>
+                            <div><small>({{ $type->projects_count }})</small></div>
                             <ul>
 
                                 @forelse ($type->projects as $project)
