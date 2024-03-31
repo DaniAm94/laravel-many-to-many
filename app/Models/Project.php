@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -43,5 +44,25 @@ class Project extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    // Query scope
+    public function scopeStatusFilter(Builder $query, $status)
+    {
+        if (!$status) return $query;
+        $value = $status === 'completed';
+        return $query->whereIsCompleted($value);
+    }
+    public function scopeTypeFilter(Builder $query, $type_id)
+    {
+        if (!$type_id) return $query;
+        return $query->whereTypeId($type_id);
+    }
+    public function scopeTechnologyFilter(Builder $query, $technology_id)
+    {
+        if (!$technology_id) return $query;
+        return $query->whereHas('technologies', function ($query) use ($technology_id) {
+            $query->where('technologies.id', $technology_id);
+        });
     }
 }
