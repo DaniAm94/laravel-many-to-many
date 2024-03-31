@@ -22,17 +22,25 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        // Prendo il filtro di ricerca dalla request
-        $filter = $request->query('filter');
-        // Preparo la query dei progetti ordinata per data di modifica e di creazione
-        $query = Project::orderByDesc('updated_at')->orderByDesc('created_at');
-        if ($filter) {
-            $value = $filter === 'completed';
-            $query->whereIsCompleted($value);
-        }
-        // pagino 10 progetti alla volta
-        $projects = $query->paginate(10)->withQueryString();
-        return view('admin.projects.index', compact('projects', 'filter'));
+        // Prendo i filtri di ricerca dalla request
+        $status_filter = $request->query('status_filter');
+        $type_filter = $request->query('type_filter');
+        $technology_filter = $request->query('technology_filter');
+
+
+
+        // Faccio la query dei progetti ordinata per data di modifica e di creazione e applico i vari filtri
+        $projects = Project::statusFilter($status_filter)
+            ->typeFilter($type_filter)
+            ->technologyFilter($technology_filter)
+            ->orderByDesc('updated_at')
+            ->orderByDesc('created_at')
+            ->paginate(10)
+            ->withQueryString();
+
+        $technologies = Technology::select('id', 'label')->get();
+        $types = Type::select('id', 'label')->get();
+        return view('admin.projects.index', compact('projects', 'types', 'technologies', 'status_filter', 'type_filter', 'technology_filter'));
     }
 
     /**
