@@ -8,7 +8,7 @@
         <h1 class="my-3 ">{{ $project->title }}</h1>
 
         {{-- Autore --}}
-        <h5>{{ $project->user ? $project->user->name : 'Anonimo' }}</h5>
+        <h5>{{ $project->author ? $project->author->name : 'Anonimo' }}</h5>
 
         {{-- Tipologia --}}
         <p>Tipologia: @if ($project->type)

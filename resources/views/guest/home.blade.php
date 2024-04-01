@@ -22,7 +22,7 @@
                         <div>
 
                             {{-- Autore --}}
-                            <span>{{ $project->user ? $project->user->name : 'Anonimo' }}</span>
+                            <span>{{ $project->author ? $project->author->name : 'Anonimo' }}</span>
 
                             {{-- Data creazione --}}
                             <small class="card-subtitle text-body-secondary">

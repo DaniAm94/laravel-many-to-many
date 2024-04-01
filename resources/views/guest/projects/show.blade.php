@@ -7,7 +7,7 @@
         <div class="card-header d-flex justify-content-between align-items-center ">
 
             {{-- Autore --}}
-            <div>{{ $project->user ? $project->user->name : 'Anonimo' }}</div>
+            <div>{{ $project->author ? $project->author->name : 'Anonimo' }}</div>
 
             {{-- Pulsante per tornare alla lista --}}
             <a href="{{ route('guest.home') }}" class="btn btn-sm btn-primary ">Torna alla lista</a>

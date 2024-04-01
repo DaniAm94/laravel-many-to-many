@@ -48,7 +48,7 @@
                     <td>{{ $project->title }}</td>
 
                     {{-- Autore --}}
-                    <td>{{ $project->user ? $project->user->name : 'Anonimo' }}</td>
+                    <td>{{ $project->author ? $project->author->name : 'Anonimo' }}</td>
 
                     {{-- Slug --}}
                     <td>{{ $project->slug }}</td>

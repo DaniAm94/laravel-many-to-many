@@ -41,9 +41,9 @@ class Project extends Model
         return $this->belongsToMany(Technology::class);
     }
 
-    public function user()
+    public function author()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     // Query scope
